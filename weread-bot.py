@@ -3922,8 +3922,15 @@ class WeReadSessionManager:
                     event=NotificationEvent.SESSION_SUCCESS,
                 )
             elif result.status == SessionStatus.FAILED:
+                failure_prefix = (
+                    "⚠️⚠️ 微信读书自动阅读失败\n"
+                    "最可能原因：Cookie 已过期（最常见）。请重新在 weread.qq.com 打开一本书 → F12 → "
+                    "Network → 过滤 read → 翻一页 → 右键 web/book/read 请求 → Copy as cURL (bash) → "
+                    "更新仓库 Secret：WEREAD_CURL_STRING。\n"
+                    "也可能是该书已读完、或微信读书接口结构变更。\n\n"
+                )
                 await self.notification_service.send_notification_async(
-                    result.message or "阅读会话失败",
+                    failure_prefix + (result.message or "阅读会话失败"),
                     event=NotificationEvent.SESSION_FAILURE,
                 )
         except Exception as exc:
