@@ -1,11 +1,6 @@
 name: Auto Reading Bot
 
 on:
-  # 定时触发 - 北京时间每天 09:00（UTC 01:00）自动运行一次
-  schedule:
-    - cron: '0 1 * * *'    # UTC 01:00 = 北京时间 09:00
-  
-  # 拉取请求触发，用于测试阅读
   pull_request:
     branches: [ main ]
     paths:
